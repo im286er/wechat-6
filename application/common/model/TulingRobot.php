@@ -8,9 +8,9 @@
 
 namespace app\common\model;
 
-use app\Common\model\CurlT;
 use think\config;
 use think\Hook;
+use think\Exception;
 class TulingRobot
 {
 	public $options = array();
@@ -18,7 +18,12 @@ class TulingRobot
 	private $url = '';
 	public $reply='';
 	public $userid = '';
-	
+
+    /**
+     * TulingRobot constructor.
+     * @param array $options
+     * @throws Exception
+     */
 	public function __construct($options=array())
 	{
 		$this->options = !empty($options) ? $options : $this->options;
@@ -43,9 +48,9 @@ class TulingRobot
 		);
 		$curl = new CurlT($this->url,$data);
 		$reply = $curl->curl_post('json');
-		Hook::listen("tuling_reply", array('from'=>$user_id,));
-		if($reply === false)
-		{
+		$params = array('from'=>$user_id,'content'=>$reply['text']);
+		Hook::listen("tuling_reply", $params);
+		if($reply === false) {
 			return 'sorry!connection aborted.';
 		}else{
 			$reply=json_decode($reply,true);

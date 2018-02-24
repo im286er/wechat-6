@@ -17,8 +17,4 @@ class Visitor extends Model
 	protected $from;
 	protected $first_visit_time;
 	protected $name="visitor";
-	public function __construct($visitor=array())
-	{
-		parent::__construct();
-	}
 }
