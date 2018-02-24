@@ -1,0 +1,130 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="Bookmark" href="/favicon.ico" >
+    <link rel="Shortcut Icon" href="/favicon.ico" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="__STATIC__/admin/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="__STATIC__/admin/lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/admin/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/admin/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/admin/lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/admin/static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/admin/static/h-ui.admin/css/style.css" />
+    <!--/meta 作为公共模版分离出去-->
+
+    <title>添加用户 - H-ui.admin v3.0</title>
+</head>
+<body>
+<article class="page-container">
+    <form action="{:input('id')?'levelEdit':'levelAdd'}" method="post" class="form form-horizontal" id="form-member-add">
+        {:input('id')?'<input type="hidden" value="'.$info['id'].'" name="id">':''}
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>等级中文名：</label>
+            <div class="formControls col-xs-4 col-sm-4">
+                <input type="text" class="input-text" value="{$info.level_name|default=''}" {if condition="$info.level_name neq '' or !empty($info['level_name'])"} readonly
+                       {else /} datatype="*" ajaxurl="{:url('admin/User/ajaxCheckLevelName')}"{/if} name="level_name" placeholder="level Name"/>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>等级英文名：</label>
+            <div class="formControls col-xs-4 col-sm-4 skin-minimal">
+                <input type="text" class="input-text" placeholder="level EName"
+                       value="{$info.level_ename|default=''}" name="level_ename" datatype="*1-20"
+                       ignore="ignore" errormsg="英文名为1到20位字符" />
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>等级图标：</label>
+            <div class="formControls col-xs-4 col-sm-4">
+                <img id="thumb_url" src='{if condition="$info['level_icon']"}{$info.level_icon}{else /}__STATIC__/imgs/nopic.jpg{/if}' style="height:100px;">
+                <input type="hidden"  id="picurl" name="level_icon" value="{$info.level_icon}"/>
+                <input type="hidden" name="oldPic" value="{$info.level_icon}" />
+                <button class="btn btn-success" id="image"  type="button" >选择图片</button>
+            </div>
+        </div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+    </form>
+</article>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="__STATIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/static/h-ui.admin/js/H-ui.admin.js"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__STATIC__/admin/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="__STATIC__/validateform/Validform.min.js"></script>
+<link  rel="stylesheet" href="__STATIC__/validateform/style.css">
+<script charset="utf-8" src="__STATIC__/kindeditor-4.1.10/kindeditor-min.js"></script>
+<script charset="utf-8" src="__STATIC__/kindeditor-4.1.10/lang/zh_CN.js"></script>
+<link rel="stylesheet" href="__STATIC__/kindeditor-4.1.10/themes/default/default.css" />
+<script type="text/javascript">
+    $("#password").blur(function(){
+        if($.trim($(this).val())!='')
+        {
+            $("#rpasswd").attr('datatype','*');
+        }
+        else
+        {
+            $("#rpasswd").removeAttr('datatype');
+        }
+    });
+    $(".form-horizontal").Validform({
+        ajaxPost:true,
+        tiptype:3,
+        ignoreHidden:false,
+        datatype:{
+            'pwd':/^[a-zA-Z]{1}([a-zA-Z0-9]|[._]){4,19}$/,
+            'phone':/^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|17[0-9]{9}|18[0-9]{9}$/,
+            'username':/^[a-zA-Z]{1}([a-zA-Z0-9]|[._]){4,19}$/
+        },
+        callback:function(data){
+            if(data.status=="y"){
+                setTimeout(function(){
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.$('.btn-refresh').click();
+                    parent.layer.close(index);
+                },2000);
+            }else {
+            }
+        }
+    });
+    KindEditor.ready(function(K) {
+        var editor = K.editor({
+            //allowFileManager : true,
+            uploadJson : "{:url('Common/uploadImg',array('path'=>'levelIcon',thumb=>0,'cat'=>'levelIcon'))}", //上传功能
+            fileManagerJson : '/static/kindeditor-4.1.10/php/file_manager_json.php?dirpath=levelIcon'  //网络空间
+        });
+        //上传背景图片
+        K('#image').click(function() {
+            editor.loadPlugin('image', function() {
+                editor.plugin.imageDialog({
+                    //showRemote : false, //网络图片不开启
+                    //showLocal : false, //不开启本地图片上传
+                    imageUrl : K('#picurl').val(),
+                    clickFn : function(url, title, width, height, border, align) {
+                        K('#picurl').val(url);
+                        $('#thumb_url').attr("src",url);
+                        editor.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+</script>
+</body>
+</html>

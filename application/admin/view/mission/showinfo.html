@@ -1,0 +1,140 @@
+<!--_meta 作为公共模版分离出去-->
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <link rel="Bookmark" href="/favicon.ico" >
+    <link rel="Shortcut Icon" href="/favicon.ico" />
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="__STATIC__/admin/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="__STATIC__/admin/lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/admin/static/h-ui/css/H-ui.min.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/admin/static/h-ui.admin/css/H-ui.admin.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/admin/lib/Hui-iconfont/1.0.8/iconfont.css" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/admin/static/h-ui.admin/skin/default/skin.css" id="skin" />
+    <link rel="stylesheet" type="text/css" href="__STATIC__/admin/static/h-ui.admin/css/style.css" />
+    <!--/meta 作为公共模版分离出去-->
+	<link  rel="stylesheet" href="__STATIC__/validateform/style.css">
+	<link  rel="stylesheet" href="__STATIC__/kindeditor-4.1.10/themes/default/default.css" />
+    <title>发布任务 - H-ui.admin v3.0</title>
+</head>
+<body>
+<article class="page-container">
+<form method="post" class="form-horizontal">
+        <input type="hidden" name="id" value="{$info['id']}">
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>发布人：</label>
+            <div class="formControls col-xs-6 col-sm-6">
+                <input type="text" class="input-text" readonly value="{$info.fname}">
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>任务详情：</label>
+            <div class="formControls col-xs-6 col-sm-6 skin-minimal">
+                <textarea  value="{$info.content}" placeholder="键入任务详情" readonly class="textarea radius">{$info.content}</textarea>
+            </div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>任务备注：</label>
+            <div class="formControls col-xs-6 col-sm-6">
+                <textarea  value="{$info.note}" placeholder="键入任务备注" readonly class="textarea radius">{$info.note}</textarea>
+            </div>
+        </div>
+		<div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>任务进度：</label>
+            <div class="formControls col-xs-6 col-sm-6">
+                <span class="select-box">
+				<select class="select" name="status">
+					<option value="0" {eq name="$info.status" value="0"}selected{/eq}>未接受</option>
+					<option value="1" {eq name="$info.status" value="1"}selected{/eq}>接受</option>
+					<option value="2" {eq name="$info.status" value="2"}selected{/eq}>完成</option>
+				</select>
+				</span>
+            </div>
+        </div>
+		<div class="row cl">
+            <label class="form-label col-xs-4 col-sm-3"><span class="c-red">*</span>任务完成截图：</label>
+            <div class="formControls col-xs-6 col-sm-6">
+			<input type="hidden" id="re_img" name="re_img" value="{$info['re_img']}">
+			<input type="hidden" name="oldimg"value="{$info['re_img']}">
+                <img id="thumb_url" src='{if condition="$info['re_img']"}{$info.re_img}{else /}__STATIC__/imgs/nopic.jpg{/if}' style="height:100px;margin:10px;margin-left:0px;">
+				<button class="btn btn-success" id="image"  type="button" >选择图片</button>
+			</div>
+        </div>
+		<div class="row cl">
+			<label class="form-label col-xs-4 col-sm-3">任务回复</label>
+			<div class="formControls col-xs-6 col-sm-6">
+				<textarea value="{$info['re_msg']}" name="msg" class="textarea radius">{$info['re_msg']}</textarea>
+			</div>
+		</div>
+        <div class="row cl">
+            <div class="col-xs-8 col-sm-9 col-xs-offset-4 col-sm-offset-3">
+                <input class="btn btn-primary radius" type="submit" value="&nbsp;&nbsp;提交&nbsp;&nbsp;">
+            </div>
+        </div>
+		<form>
+</article>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="__STATIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/static/h-ui.admin/js/H-ui.admin.js"></script>
+<link rel="stylesheet" href="__STATIC__/kindeditor-4.1.10/themes/simple/simple.css" />
+<script charset="utf-8" src="__STATIC__/kindeditor-4.1.10/kindeditor-min.js"></script>
+<script charset="utf-8" src="__STATIC__/kindeditor-4.1.10/lang/zh_CN.js"></script>
+<script type="text/javascript" src="__STATIC__/validateform/Validform.min.js"></script>
+<link  rel="stylesheet" href="__STATIC__/validateform/style.css">
+<!--/_footer 作为公共模版分离出去-->
+<script>
+    KindEditor.ready(function(K) {
+        var editorW = K.editor({
+            uploadJson : "{:url('Common/uploadImg',array('path'=>'Mission'))}", //上传功能
+        });
+        //上传背景图片
+        K('#image').click(function() {
+            editorW.loadPlugin('image', function() {
+                editorW.plugin.imageDialog({
+                    showRemote : false, //网络图片不开启
+                    //showLocal : false, //不开启本地图片上传
+                    imageUrl : K('#re_img').val(),
+                    clickFn : function(url, title, width, height, border, align) {
+                        K('#re_img').val(url);
+                        $('#thumb_url').attr("src",url);
+                        editorW.hideDialog();
+                    }
+                });
+            });
+        });
+    });
+	$(".form-horizontal").Validform({
+        ajaxPost:true,
+        tiptype:2,
+        ignoreHidden:false,
+        datatype:{
+            'pwd':/^[a-zA-Z]{1}([a-zA-Z0-9]|[._]){4,19}$/
+        },
+        beforeCheck:function(curform){
+            //在表单提交执行验证之前执行的函数，curform参数是当前表单对象。
+            //这里明确return false的话将不会继续执行验证操作;
+            //return false;
+        },
+        callback:function(data){
+            if(data.status=="y"){
+               setTimeout(function(){
+                    var index = parent.layer.getFrameIndex(window.name);
+                    parent.$('.btn-refresh').click();
+                    parent.layer.close(index);
+               },2000);
+            }else {
+            }
+        }
+    });
+</script>
+</body>
+</html>

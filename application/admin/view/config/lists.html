@@ -1,0 +1,117 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width,initial-scale=1,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no"/>
+    <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    <link rel="Bookmark" href="/favicon.ico">
+    <link rel="Shortcut Icon" href="/favicon.ico"/>
+    <!--[if lt IE 9]>
+    <script type="text/javascript" src="__STATIC__/admin/lib/html5shiv.js"></script>
+    <script type="text/javascript" src="__STATIC__/admin/lib/respond.min.js"></script>
+    <![endif]-->
+    <link rel="stylesheet" type="text/css" href="__STATIC__/admin/static/h-ui/css/H-ui.min.css"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/admin/static/h-ui.admin/css/H-ui.admin.css"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/admin/lib/Hui-iconfont/1.0.8/iconfont.css"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/admin/static/h-ui.admin/skin/default/skin.css"
+          id="skin"/>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/admin/static/h-ui.admin/css/style.css"/>
+    <title>基本设置</title>
+</head>
+<body>
+<nav class="breadcrumb"><i class="Hui-iconfont">&#xe67f;</i> 首页 <span class="c-gray en">&gt;</span> 系统管理 <span
+        class="c-gray en">&gt;</span> 基本设置 <a class="btn btn-success radius r mr-20 btn-refresh"
+                                              style="line-height:1.6em;margin-top:3px"
+                                              href="javascript:location.replace(location.href);"
+                                              onclick="javascript:location.replace(location.href);" title="刷新"><i
+        class="Hui-iconfont">&#xe68f;</i></a></nav>
+<div class="pd-20">
+
+    <div class="panel-body">
+    <form action="" method="post" class="form form-horizontal responsive" id="form-article-add">
+
+        <div id="tab-system" class="HuiTab">
+            {foreach $list as $v}
+            <div class="row cl">
+                <label class="form-label col-xs-3 col-sm-3"><span class="c-red">*</span>{$v['note']}</label>
+                <div class="formControls col-xs-5">
+                    <input type="text" class="input-text valid" name="{$v['name']}" value="{$v['value']}" datatype="*">
+                </div>
+                <div class="formControls col-xs-3">
+                </div>
+            </div>
+            {/foreach}
+
+        </div>
+
+        <div class="row cl">
+
+            <div class="col-10 col-offset-2">
+
+                <button class="btn btn-primary radius" type="submit"><i class="Hui-iconfont">&#xe632;</i> 保存</button>
+
+                <button onClick="layer_close();" class="btn btn-default radius" type="button">
+                    &nbsp;&nbsp;取消&nbsp;&nbsp;
+                </button>
+
+            </div>
+
+        </div>
+
+    </form>
+    </div>
+
+</div>
+
+<!--_footer 作为公共模版分离出去-->
+<script type="text/javascript" src="__STATIC__/admin/lib/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/lib/layer/2.4/layer.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/static/h-ui/js/H-ui.min.js"></script>
+<script type="text/javascript" src="__STATIC__/admin/static/h-ui.admin/js/H-ui.admin.js"></script>
+<!--/_footer 作为公共模版分离出去-->
+
+<!--请在下方写此页面业务相关的脚本-->
+<script type="text/javascript" src="__STATIC__/admin/lib/My97DatePicker/4.8/WdatePicker.js"></script>
+<script type="text/javascript" src="__STATIC__/validateform/Validform.min.js"></script>
+<link rel="stylesheet" href="__STATIC__/validateform/style.css">
+
+
+<script type="text/javascript">
+
+    $(".form-horizontal").Validform({
+        ajaxPost: true,
+        tiptype: 2,
+        ignoreHidden: false,
+        datatype: {
+            'pwd': /^[a-zA-Z]{1}([a-zA-Z0-9]|[._]){4,19}$/,
+            'phone': /^13[0-9]{9}$|14[0-9]{9}|15[0-9]{9}$|17[0-9]{9}|18[0-9]{9}$/,
+            'username': /^[a-zA-Z]{1}([a-zA-Z0-9]|[._]){4,19}$/,
+            'myown': function (gets, obj, curform, regxp) {
+                if (gets != '') {
+                    return true
+                }
+                var parent = curform.find('#pid');
+                if (parent.val() == "") {
+                    return true
+                }
+                return false;
+            }
+        },
+        callback: function (data) {
+            if (data.status == "y") {
+                setTimeout(function () {
+                    //var index = this.layer.getFrameIndex(window.name);
+                    $('.btn-refresh').click();
+                }, 2000);
+            } else {
+            }
+        }
+    });
+
+</script>
+
+</body>
+</html>
