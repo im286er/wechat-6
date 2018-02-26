@@ -13,6 +13,10 @@ use app\common\model\VisitLog;
 
 class Receive
 {
+    /**
+     * 收到消息后HOOK
+     * @param \mikkle\tp_wechat\src\Receive $receive
+     */
     public function run(\mikkle\tp_wechat\src\Receive $receive)
     {
         #判断访客是否存在于表中
