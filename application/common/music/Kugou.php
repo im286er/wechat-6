@@ -13,17 +13,10 @@ use app\common\model\CurlT;
 class Kugou
 {
     const BASE_URL = "http://songsearch.kugou.com/song_search_v2";
+    const CDN_MOBILE_URL = "http://mobilecdn.kugou.com/api/v3/search/song?format=json&showtype=1";
     public $keyword;
     public $page = 1;
     public $pagesize = 1;
-    public $userid = "-1";
-    public $clientver = "";
-    public $platform = 'WebFilter';
-    public $tag = 'em';
-    public $filter = 2;
-    public $iscorrection = 1;
-    public $privilege_filter = 0;
-    protected $extra_url = '';
     public $data = array();
     public $music = array();
     const MP3_URL = "http://www.kugou.com/yy/index.php?r=play/getdata";
@@ -37,7 +30,6 @@ class Kugou
         if (!empty($search_content)) {
             $this->keyword = $search_content;
         }
-        $this->extra_url = "&userid=$this->userid&clientver=$this->clientver&platform=$this->platform&tag=$this->tag&filter=$this->filter&iscorrection=$this->iscorrection&privilege_filter=$this->privilege_filter";
     }
 
     /**
@@ -55,13 +47,13 @@ class Kugou
         $this->keyword = !empty($search_content) ? $search_content : $this->keyword;
         $this->page = $page;
         $this->pagesize = $pageSize;
-        $url = self::BASE_URL . "?keyword=" . rawurlencode($this->keyword) .
-            "&page=$this->page&pagesize=$this->pagesize" . $this->extra_url;
+        $url = self::CDN_MOBILE_URL . "&keyword=" . rawurlencode($this->keyword) .
+            "&page=$this->page&pagesize=$this->pagesize";
         $curl = new CurlT($url, '');
         $result = $curl->curl_get();
         if ($result !== false) {
             $data = json_decode($result, true);
-            $this->data = $data['data']['lists'];
+            $this->data = $data['data']['info'];
             return $this->data;
         } else {
             return array('status' => $result, 'info' => $curl->error);

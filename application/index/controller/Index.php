@@ -43,14 +43,14 @@ class Index extends WechatApi
                 if(isset($search_list['status'])) {
                     return $search_list['info'];
                 }
-                $music = $song->getMusic($search_list[0]['FileHash'],$search_list[0]['AlbumID']);
+                $music = $song->getMusic($search_list[0]['hash'],$search_list[0]['album_audio_id']);
                 if(count($music)==0) {
                     return 'ops!something goes down.';
                 }
                 $res=[];
                 $res['type']                    ='music';
-                $res['message']['title']        = $music['audio_name'];
-                $res['message']['desc']         = $music['album_name'];
+                $res['message']['title']        = $music['song_name'];
+                $res['message']['desc']         = $music['audio_name'];
                 $res['message']['musicurl']     = $music['play_url'];
                 $res['message']['thumbmediaid'] = $music['img'];
                 $res['message']['hgmusicurl'] = $music['play_url'];
