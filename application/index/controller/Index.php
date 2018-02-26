@@ -26,8 +26,12 @@ class Index extends WechatApi
         $param = explode("#", $text);
         if (count($param) < 2) {
             $from = $this->weObj->getRevFrom();
-            $robot = new TulingRobot();
-            $res = $robot->getReply($from,$text);
+            try{
+                $robot = new TulingRobot();
+                $res = $robot->getReply($from,$text);
+            }catch (\Exception $e){
+                $res = $e->getMessage();
+            }
         } else {
             if ($param[0] == '歌曲') {
                 $search = $param[1];
