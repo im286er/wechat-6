@@ -32,8 +32,8 @@ class Index extends WechatApi
             }catch (\Exception $e){
                 $res = $e->getMessage();
             }
-            $this->weObj->reply_tuling_content = $res;
-            $this->weObj->reply_tuling_type ='text';
+            $this->weObj->reply_tuling      = $res;
+            $this->weObj->reply_tuling_type = $type;
             Hook::listen("tuling_reply",$this->weObj);
         } else {
             if ($param[0] == '歌曲') {
@@ -42,13 +42,13 @@ class Index extends WechatApi
                 if (!empty($song->error))
                     return $song->error;
                 $res = [
-                    'type' => 'music',
+                    'type'    => 'music',
                     'message' => [
-                        'title' => $song->fsong,
-                        'desc' => $song->fsinger . $song->fsinger2,
-                        'musicurl' => $song->musicUrl,
-                        'hgmusicurl' => $song->musicUrl,
-                        'thumbmediaid' => ''
+                        'title'         => $song->fsong,
+                        'desc'          => $song->fsinger . $song->fsinger2,
+                        'musicurl'      => $song->musicUrl,
+                        'hgmusicurl'    => $song->musicUrl,
+                        'thumbmediaid'  => ''
                     ]
                 ];
             }
