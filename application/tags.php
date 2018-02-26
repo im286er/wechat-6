@@ -28,4 +28,7 @@ return [
     'wechat_receive'=>[
         'app\\index\\behavior\\Receive'
     ],
+    'tuling_reply'=>[
+        'app\\index\\behavior\\Tuling'=>'reply'
+    ]
 ];
