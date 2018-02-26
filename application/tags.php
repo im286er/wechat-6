@@ -29,6 +29,6 @@ return [
         'app\\index\\behavior\\Receive'
     ],
     'tuling_reply'=>[
-        'app\\index\\behavior\\Tuling'=>'reply'
+        'app\\index\\behavior\\Tuling','reply'
     ]
 ];
