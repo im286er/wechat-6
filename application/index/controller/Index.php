@@ -32,8 +32,8 @@ class Index extends WechatApi
             }catch (\Exception $e){
                 $res = $e->getMessage();
             }
-            $this->weObj->reply_tuling      = $res;
-            $this->weObj->reply_tuling_type = $type;
+            $this->weObj->reply_tuling_content  = $res;
+            $this->weObj->reply_tuling_type     = $type;
             Hook::listen("tuling_reply",$this->weObj);
         } else {
             if ($param[0] == '歌曲') {
