@@ -41,5 +41,7 @@ class Receive
             'message_type'     => $receive->getRevType(),
             'visit_time'       => date("Y-m-d H:i:s", $receive->getRevCtime())
         ));
+        $receive->receive_id = $visit_history->getLastInsID();
+        $receive->visitor_id = $visitor_id;
     }
 }
