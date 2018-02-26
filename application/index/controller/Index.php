@@ -52,8 +52,8 @@ class Index extends WechatApi
                 $res['message']['title']        = $music['song_name'];
                 $res['message']['desc']         = $music['audio_name'];
                 $res['message']['musicurl']     = $music['play_url'];
-                $res['message']['thumbmediaid'] = $music['img'];
                 $res['message']['hgmusicurl'] = $music['play_url'];
+                $res['message']['thumbmediaid'] = '';
             }
         }
         return $res;
