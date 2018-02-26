@@ -7,7 +7,7 @@ use mikkle\tp_wechat\WechatApi;
 use app\common\model\TulingRobot;
 use think\Hook;
 use think\Exception;
-
+use app\common\music\Kugou;
 class Index extends WechatApi
 {
     /**
@@ -38,19 +38,22 @@ class Index extends WechatApi
         } else {
             if ($param[0] == '歌曲') {
                 $search = $param[1];
-                $song = new Music($search);
-                if (!empty($song->error))
-                    return $song->error;
-                $res = [
-                    'type'    => 'music',
-                    'message' => [
-                        'title'         => $song->fsong,
-                        'desc'          => $song->fsinger . $song->fsinger2,
-                        'musicurl'      => $song->musicUrl,
-                        'hgmusicurl'    => $song->musicUrl,
-                        'thumbmediaid'  => ''
-                    ]
-                ];
+                $song = new Kugou($search);
+                $search_list = $song->search(1,1);
+                if(isset($search_list['status'])) {
+                    return $search_list['info'];
+                }
+                $music = $song->getMusic($search_list[0]['FileHash'],$search_list[0]['AlbumID']);
+                if(count($music)==0) {
+                    return 'ops!something goes down.';
+                }
+                $res=[];
+                $res['type']                    ='music';
+                $res['message']['title']        = $search_list['FileName'];
+                $res['message']['desc']         = $search_list['AlbumName'];
+                $res['message']['musicurl']     = $music['play_url'];
+                $res['message']['thumbmediaid'] = $music['img'];
+                $res['message']['hgmusicurl'] = $music['play_url'];
             }
         }
         return $res;
@@ -58,8 +61,6 @@ class Index extends WechatApi
 
     function test()
     {
-        halt($this->options);
-        $song = new Music("周杰伦");
-        print_r($song);
+
     }
 }
