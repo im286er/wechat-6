@@ -49,8 +49,8 @@ class Index extends WechatApi
                 }
                 $res=[];
                 $res['type']                    ='music';
-                $res['message']['title']        = $search_list['FileName'];
-                $res['message']['desc']         = $search_list['AlbumName'];
+                $res['message']['title']        = $music['audio_name'];
+                $res['message']['desc']         = $music['album_name'];
                 $res['message']['musicurl']     = $music['play_url'];
                 $res['message']['thumbmediaid'] = $music['img'];
                 $res['message']['hgmusicurl'] = $music['play_url'];
