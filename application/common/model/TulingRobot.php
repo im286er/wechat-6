@@ -48,13 +48,11 @@ class TulingRobot
 		);
 		$curl = new CurlT($this->url,$data);
 		$reply = $curl->curl_post('json');
-		$params = array('from'=>$user_id,'content'=>$reply['text']);
-		Hook::listen("tuling_reply", $params);
-		if($reply === false) {
-			return 'sorry!connection aborted.';
+		if($reply!==false){ 
+		    $reply=json_decode($reply,true)['text'];
 		}else{
-			$reply=json_decode($reply,true);
-			return $reply['text'];
+		    $reply='sorry!connection aborted.'
 		}
+		return $reply;
 	}
 }
