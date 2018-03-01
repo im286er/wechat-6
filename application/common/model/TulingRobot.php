@@ -51,7 +51,7 @@ class TulingRobot
 		if($reply!==false){ 
 		    $reply=json_decode($reply,true)['text'];
 		}else{
-		    $reply='sorry!connection aborted.'
+		    $reply='sorry!connection aborted.';
 		}
 		return $reply;
 	}
